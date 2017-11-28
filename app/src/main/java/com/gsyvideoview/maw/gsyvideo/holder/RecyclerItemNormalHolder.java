@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.gsyvideoview.maw.gsyvideo.R;
 import com.gsyvideoview.maw.gsyvideo.bean.VideoModel;
 import com.gsyvideoview.maw.gsyvideo.listener.SampleListener;
+import com.gsyvideoview.maw.gsyvideo.video.SampleCoverVideo;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -20,13 +21,17 @@ import butterknife.ButterKnife;
  */
 
 public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
-
+    /**
+     *   update add maw
+     *   更改 StandardGSYVideoPlayer ->SampleConverVideo
+     *   去掉本掉封面  同时增加第一帧
+     */
     public final static String TAG = "RecyclerView2List";
 
     protected Context context = null;
 
     @BindView(R.id.video)
-    StandardGSYVideoPlayer gsyVideoPlayer;
+    SampleCoverVideo gsyVideoPlayer;
 
     ImageView imageView;
 
@@ -36,23 +41,20 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         super(v);
         this.context = context;
         ButterKnife.bind(this, v);
-        imageView = new ImageView(context);
+     //   imageView = new ImageView(context);
         gsyVideoOptionBuilder = new GSYVideoOptionBuilder();
     }
 
     public void onBind(final int position, VideoModel videoModel) {
 
         //增加封面
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);/*
-        if (position % 2 == 0) {
+     //   imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        /*
+     /   if (position % 2 == 0) {
             imageView.setImageResource(R.mipmap.xxx1);
         } else {
             imageView.setImageResource(R.mipmap.xxx2);
         }*/
-        if (imageView.getParent() != null) {
-            ViewGroup viewGroup = (ViewGroup) imageView.getParent();
-            viewGroup.removeView(imageView);
-        }
         String url;
         String title;
         if (position % 2 == 0) {
@@ -62,9 +64,15 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
             url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
             title = "哦？Title？";
         }
+        gsyVideoPlayer.loadCoverImage(url,R.mipmap.ic_launcher);
+       /* if (imageView.getParent() != null) {
+            ViewGroup viewGroup = (ViewGroup) imageView.getParent();
+            viewGroup.removeView(imageView);
+        }
+*/
         gsyVideoOptionBuilder
                 .setIsTouchWiget(false)
-                .setThumbImageView(imageView)
+       //         .setThumbImageView(imageView)
                 .setUrl(url)
                 .setVideoTitle(title)
                 .setCacheWithPlay(true)

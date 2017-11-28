@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         final SampleCoverVideo sampleCoverVideo =findViewById(R.id.video);
        // sampleCoverVideo.loadCoverImage();
         String url ="http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+        sampleCoverVideo.loadCoverImage(url,R.mipmap.ic_launcher);
         GSYVideoOptionBuilder gsyVideoOptionBuilder =new GSYVideoOptionBuilder();
         gsyVideoOptionBuilder
                 .setIsTouchWiget(false)
